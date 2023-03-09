@@ -1,4 +1,3 @@
-on
 # Define pipeline and agent
 pipeline:
   agent:
@@ -12,15 +11,15 @@ stages:
   
   - stage: Installation de PHP
     steps:
-      - echo: 'installing php'
+      - echo: 'Installing PHP'
       - sh: 'sudo apt-get update && sudo apt-get install -y php'
-      - echo: 'well installed'
+      - echo: 'Installation successful'
   
   - stage: Installation des dépendances
     steps:
       - sh: 'composer install'
   
-  - stage: Validation de la qualite du code
+  - stage: Validation de la qualité du code
     steps:
       - sh: 'php vendor/bin/phpunit --filter "testValidation" jeu_devine.php'
   
