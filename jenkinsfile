@@ -22,9 +22,10 @@ pipeline {
         
         stage('Test') {
             steps {
-                sh './vendor/bin/phpunit JeuTest.php'
-                sh './vendor/bin/phpunit JeuTest1.php'
-                sh './vendor/bin/phpunit JeuTest2.php'
+                
+                sh './phpunit JeuTest.php'
+                sh './phpunit JeuTest1.php'
+                sh './phpunit JeuTest2.php'
             }
         }
     }
