@@ -9,11 +9,11 @@ pipeline {
               checkout scmGit(branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/Chihab999/dev.git']])
             }
         }
-        stage('Installation de PHP') {
+        stages {
+        stage('Install PHP') {
             steps {
-                echo 'installing php'
-                sh 'sudo apt-get update && sudo apt-get install -y php'
-                echo 'well installed'
+                sh 'sudo apt-get update'
+                sh 'sudo apt-get install -y php'
             }
         }
         
