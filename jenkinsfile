@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Installation de PHP') {
             steps {
+                echo 'installing php'
                 sh 'sudo apt-get update && sudo apt-get install -y php'
+                echo 'well installed'
             }
         }
         
@@ -16,16 +18,16 @@ pipeline {
         
         stage('Validation de la qualite du code') {
             steps {
-                sh '--standard=PSR2 jeu_devine.php'
+                sh --standard=PSR2 jeu_devine.php
             }
         }
         
         stage('Test') {
             steps {
                 
-                sh './phpunit JeuTest.php'
-                sh './phpunit JeuTest1.php'
-                sh './phpunit JeuTest2.php'
+                sh ./phpunit/JeuTest.php
+                sh ./phpunit/JeuTest1.php
+                sh ./phpunit/JeuTest2.php
             }
         }
     }
