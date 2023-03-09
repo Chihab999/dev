@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Installation de PHP') {
+            steps {
+                sh 'sudo apt-get update && sudo apt-get install -y php'
+            }
+        }
+        
+        stage('Installation des dépendances') {
+            steps {
+                sh 'composer install'
+            }
+        }
+        
+        stage('Validation de la qualité du code') {
+            steps {
+                sh 'vendor/bin/phpcs --standard=PSR2 src/jeu_devine.php'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh './vendor/bin/phpunit JeuTest.php'
+                sh './vendor/bin/phpunit JeuTest1.php'
+                sh './vendor/bin/phpunit JeuTest2.php'
+            }
+        }
+    }
+    
+     post {
+        always {
+            script {
+                if (currentBuild.result != 'SUCCESS') {
+                    slackSend color: '#FF0000', message: 'The pipeline has failed!'
+                } else {
+                    slackSend color: '#00FF04', message: 'The pipeline has succeeded!'
+                }
+            }
+        }
+    }
+    
+    options {
+        // Définir une limite de temps maximale pour la construction
+        timeout(time: 10, unit: 'MINUTES')
+    }
+}
