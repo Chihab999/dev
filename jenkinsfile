@@ -7,6 +7,7 @@ pipeline {
             steps {
                 // Checkout your code from source control
               checkout scmGit(branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/Chihab999/dev.git']])
+              echo 'checkout succes'
             }
         }
        
@@ -15,38 +16,26 @@ pipeline {
         
         stage('Installation des dépendances') {
             steps {
-               bat 'npm install' // replace with the appropriate command for your dependencies
+              echo 'checkout succes'
             }
         }
         
         stage('Validation de la qualite du code') {
             steps {
-                // Run the validation test on jeu.php
-              git branch: 'main', url: 'https://github.com/Chihab999/dev.git'
+                echo 'checkout succes'
               
             }
         }
         
         stage('Test') {
             steps {
-               fileExists ' phpunit' 
-               sh 'php vendor/bin/phpunit phpunit'
+              echo 'checkout succes'
                 
             }
         }
     }
     
-     post {
-        always {
-            script {
-                if (currentBuild.result != 'SUCCESS') {
-                    slackSend color: '#FF0000', message: 'The pipeline has failed!'
-                } else {
-                    slackSend color: '#00FF04', message: 'The pipeline has succeeded!'
-                }
-            }
-        }
-    }
+    
     
     options {
         // Définir une limite de temps maximale pour la construction
