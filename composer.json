@@ -1,0 +1,15 @@
+{
+    "name": "dev/chihab99",
+    "description": "devops pp",
+    "require": {
+        "php": "8.1",
+        "composer/installers": "^2.2",
+        "phpunit/phpunit": "^9.6"
+    },
+    "authors": [
+        {
+            "name": "chihab999",
+            "email": "chihabouchen11@gmail.com"
+        }
+    ]
+}
