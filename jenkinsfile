@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your code from source control
-                checkout scm
+              checkout scmGit(branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/Chihab999/dev.git']])
             }
         }
         stage('Installation de PHP') {
@@ -26,13 +26,14 @@ pipeline {
         stage('Validation de la qualite du code') {
             steps {
                 // Run the validation test on jeu.php
-                sh 'php vendor/bin/phpunit --filter "testValidation" jeu_devine.php'
+              git branch: 'main', url: 'https://github.com/Chihab999/dev.git'
+              
             }
         }
         
         stage('Test') {
             steps {
-                
+                fileExists ' phpunit'
                sh 'php vendor/bin/phpunit phpunit'
                 
             }
@@ -43,7 +44,7 @@ pipeline {
         always {
             script {
                 if (currentBuild.result != 'SUCCESS') {
-                    slackSend color: '#FF0000', message: 'The pipeline has failed!'
+                  slackUserIdFromEmail 'chihabouchen11@gmail.com'
                 } else {
                     slackSend color: '#00FF04', message: 'The pipeline has succeeded!'
                 }
@@ -53,6 +54,8 @@ pipeline {
     
     options {
         // Définir une limite de temps maximale pour la construction
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(30) {
+    // some block
+                    }
     }
 }
