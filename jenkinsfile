@@ -14,9 +14,9 @@ pipeline {
             }
         }
         
-        stage('Validation de la qualité du code') {
+        stage('Validation de la qualite du code') {
             steps {
-                sh 'vendor/bin/phpcs --standard=PSR2 jeu_devine.php'
+                sh '--standard=PSR2 jeu_devine.php'
             }
         }
         
