@@ -33,7 +33,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                fileExists ' phpunit'
+               fileExists ' phpunit' 
                sh 'php vendor/bin/phpunit phpunit'
                 
             }
@@ -44,7 +44,7 @@ pipeline {
         always {
             script {
                 if (currentBuild.result != 'SUCCESS') {
-                  slackUserIdFromEmail 'chihabouchen11@gmail.com'
+                    slackSend color: '#FF0000', message: 'The pipeline has failed!'
                 } else {
                     slackSend color: '#00FF04', message: 'The pipeline has succeeded!'
                 }
@@ -54,8 +54,6 @@ pipeline {
     
     options {
         // Définir une limite de temps maximale pour la construction
-        timeout(30) {
-    // some block
-                    }
+        timeout(time: 30, unit: 'MINUTES')
     }
 }
