@@ -28,20 +28,16 @@ stages:
       - sh: 'php vendor/bin/phpunit phpunit'
 
 # Define post actions
+# Define post actions
 post:
   always:
     script:
       - if: '$(currentBuild.result) != "SUCCESS"'
         steps:
-          - slackSend:
-              color: '#FF0000'
-              message: 'The pipeline has failed!'
+          - run: 'echo "The pipeline has failed" | mail -s "Pipeline Failed" chihabouchen11@gmail.com'
       - else:
         steps:
-          - slackSend:
-              color: '#00FF04'
-              message: 'The pipeline has succeeded!'
-
+          - run: 'echo "The pipeline has succeeded" | mail -s "Pipeline Succeeded" chihabouchen11@gmail.com'
 # Define options
 options:
   timeout: '30 minutes'
