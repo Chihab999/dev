@@ -1,0 +1,43 @@
+# Define pipeline and agent
+pipeline:
+  agent:
+    any
+
+# Define stages
+stages:
+  - stage: Checkout
+    steps:
+      - checkout: scm
+  
+  - stage: Installation de PHP
+    steps:
+      - echo: 'Installing PHP'
+      - sh: 'sudo apt-get update && sudo apt-get install -y php'
+      - echo: 'Installation successful'
+  
+  - stage: Installation des dépendances
+    steps:
+      - sh: 'composer install'
+  
+  - stage: Validation de la qualité du code
+    steps:
+      - sh: 'php vendor/bin/phpunit --filter "testValidation" jeu_devine.php'
+  
+  - stage: Test
+    steps:
+      - sh: 'php vendor/bin/phpunit phpunit'
+
+# Define post actions
+# Define post actions
+post:
+  always:
+    script:
+      - if: '$(currentBuild.result) != "SUCCESS"'
+        steps:
+          - run: 'echo "The pipeline has failed" | mail -s "Pipeline Failed" chihabouchen11@gmail.com'
+      - else:
+        steps:
+          - run: 'echo "The pipeline has succeeded" | mail -s "Pipeline Succeeded" chihabouchen11@gmail.com'
+# Define options
+options:
+  timeout: '30 minutes'
