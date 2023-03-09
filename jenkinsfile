@@ -10,17 +10,12 @@ pipeline {
             }
         }
        
-        stage('Install PHP') {
-            steps {
-                 bat '''
-                    choco install php
-                '''
-            }
+        
         }
         
         stage('Installation des dépendances') {
             steps {
-                sh 'composer install'
+               bat 'npm install' // replace with the appropriate command for your dependencies
             }
         }
         

@@ -1,1 +1,8 @@
 test11
+
+stage('Install PHP') {
+            steps {
+                 bat '''
+                    choco install php
+                '''
+            }
