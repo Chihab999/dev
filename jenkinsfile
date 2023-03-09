@@ -2,6 +2,13 @@ pipeline {
     agent any
     
     stages {
+    
+        stage('Checkout') {
+            steps {
+                // Checkout your code from source control
+                checkout scm
+            }
+        }
         stage('Installation de PHP') {
             steps {
                 echo 'installing php'
@@ -18,16 +25,16 @@ pipeline {
         
         stage('Validation de la qualite du code') {
             steps {
-                sh --standard=PSR2 jeu_devine.php
+                // Run the validation test on jeu.php
+                sh 'php vendor/bin/phpunit --filter "testValidation" jeu_devine.php'
             }
         }
         
         stage('Test') {
             steps {
                 
-                sh ./phpunit/JeuTest.php
-                sh ./phpunit/JeuTest1.php
-                sh ./phpunit/JeuTest2.php
+               sh 'php vendor/bin/phpunit phpunit'
+                
             }
         }
     }
