@@ -11,7 +11,7 @@ pipeline {
         }
        
         
-        }
+    
         
         stage('Installation des dépendances') {
             steps {
