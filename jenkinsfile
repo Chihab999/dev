@@ -22,6 +22,7 @@ pipeline {
         
         stage('Validation de la qualite du code') {
             steps {
+                sh 'composer install –no-dev'
                 echo 'checkout succes'
               
             }
